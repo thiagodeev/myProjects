@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 
+// Precisamos importar essa funcao de base64 que acabamos de criar
+import { Base64 } from "./libraries/Base64.sol";
 
 contract MyEpicNFT is ERC721URIStorage {
   using Counters for Counters.Counter;
@@ -22,7 +24,7 @@ contract MyEpicNFT is ERC721URIStorage {
   string[] secondWords = ["Um", "Zoro", "Tres", "Quatro", "Cinco", "Seis", "Sanji", "Oito", "Nove", "Dez", "Franky", "Doze", "Treze", "Quatorze", "Jimbe"];
   string[] thirdWords = ["Um", "Dois", "Nami", "Quatro", "Brook", "Seis", "Sete", "Yamato", "Nove", "Dez", "Robin", "Doze", "Treze", "Quatorze", "Quinze"];
 
-  constructor() ERC721 ("TistuiNFT", "CHINK") {
+  constructor() ERC721 ("TirupsNFT", "CHUVS") {
     console.log("Meu contrato de NFT! Tchu-hu");
   }
 
@@ -58,17 +60,41 @@ contract MyEpicNFT is ERC721URIStorage {
     string memory first = pickRandomFirstWord(newItemId);
     string memory second = pickRandomSecondWord(newItemId);
     string memory third = pickRandomThirdWord(newItemId);
+    string memory combinedWord = string(abi.encodePacked(first, second, third));
 
     // Concateno tudo junto e fecho as tags <text> e <svg>.
-    string memory finalSvg = string(abi.encodePacked(baseSvg, first, second, third, "</text></svg>"));
+    string memory finalSvg = string(abi.encodePacked(baseSvg, combinedWord, "</text></svg>"));
+
+    // pego todos os metadados de JSON e codifico com base64.
+    string memory json = Base64.encode(
+        bytes(
+            string(
+                abi.encodePacked(
+                    '{"name": "',
+                    // Definimos aqui o titulo do nosso NFT sendo a combinacao de palavras.
+                    combinedWord,
+                    '", "description": "Uma colecao aclamada e famosa de NFTs maravilhosos.", "image": "data:image/svg+xml;base64,',
+                    // Adicionamos data:image/svg+xml;base64 e acrescentamos nosso svg codificado com base64.
+                    Base64.encode(bytes(finalSvg)),
+                    '"}'
+                )
+            )
+        )
+    );
+
+    // Assim como antes, prefixamos com data:application/json;base64
+    string memory finalTokenUri = string(
+        abi.encodePacked("data:application/json;base64,", json)
+    );
+
     console.log("\n--------------------");
-    console.log(finalSvg);
+    console.log(finalTokenUri);
     console.log("--------------------\n");
 
     _safeMint(msg.sender, newItemId);
-  
-    // Vamos definir essa tokenURI depois!
-    _setTokenURI(newItemId, "blah");
+    
+    // AQUI VAI A NOVA URI DINAMICAMENTE GERADA!!!
+    _setTokenURI(newItemId, finalTokenUri);
   
     _tokenIds.increment();
     console.log("Um NFT com ID %s foi cunhado para %s", newItemId, msg.sender);

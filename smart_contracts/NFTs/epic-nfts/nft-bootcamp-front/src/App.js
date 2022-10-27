@@ -156,7 +156,7 @@ const App = () => {
 
   // Métodos para Renderizar
   const renderNotConnectedContainer = () => (
-    <button onClick={connectWallet} className="cta-button connect-wallet-button">
+    <button onClick={connectWallet} id="connect-wallet-button" className="cta-button connect-wallet-button">
       Conectar Carteira
     </button>
   )
@@ -197,7 +197,7 @@ const App = () => {
           {currentAccount === "" ? (
             renderNotConnectedContainer()
           ) : (
-            <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
+            <button onClick={askContractToMintNft} id="mint-nft-button" className="cta-button connect-wallet-button">
               Cunhar NFT
             </button>
           )}

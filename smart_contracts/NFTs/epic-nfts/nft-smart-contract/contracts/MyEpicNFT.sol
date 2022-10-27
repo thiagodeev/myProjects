@@ -24,6 +24,8 @@ contract MyEpicNFT is ERC721URIStorage {
   string[] secondWords = ["Um", "Zoro", "Tres", "Quatro", "Cinco", "Seis", "Sanji", "Oito", "Nove", "Dez", "Franky", "Doze", "Treze", "Quatorze", "Jimbe"];
   string[] thirdWords = ["Um", "Dois", "Nami", "Quatro", "Brook", "Seis", "Sete", "Yamato", "Nove", "Dez", "Robin", "Doze", "Treze", "Quatorze", "Quinze"];
 
+  event NewEpicNFTMinted(address sender, uint256 tokenId);
+
   constructor() ERC721 ("TirupsNFT", "CHUVS") {
     console.log("Meu contrato de NFT! Tchu-hu");
   }
@@ -98,5 +100,6 @@ contract MyEpicNFT is ERC721URIStorage {
   
     _tokenIds.increment();
     console.log("Um NFT com ID %s foi cunhado para %s", newItemId, msg.sender);
+    emit NewEpicNFTMinted(msg.sender, newItemId);
   }
 }

@@ -13,18 +13,50 @@ export default class User {
     this.#ativo = ativo;
   }
 
-  #montaObjUser(){
-    return ({
-      nome: this.#nome,
-      nascimento: this.#nascimento,
-      email: this.#email,
-      role: this.#role,
-      ativo: this.#ativo
-    })
+  get nome(){
+    return this.#nome
+  }
+
+  get email(){
+    return this.#email
+  }
+
+  get nascimento(){
+    return this.#nascimento
+  }
+
+  get role(){
+    return this.#role
+  }
+
+  get ativo(){
+    return this.#ativo
+  }
+
+  set nome(novoNome){
+    if(novoNome === ''){
+      throw new Error('Formato inválido.')
+    }
+    this.#nome = novoNome
+  }
+
+  set email(novoEmail){
+    this.#email = novoEmail
+  }
+
+  set nascimento(novoNascimento){
+    this.#nascimento = novoNascimento
+  }
+
+  set role(novaRole){
+    this.#role = novaRole
+  }
+
+  set ativo(novoAtivo){
+    this.#ativo = novoAtivo
   }
 
   exibirInfos(){
-    const objUser = this.#montaObjUser();
-    return `${objUser.nome}, ${objUser.nascimento}, ${objUser.email}, ${objUser.role}, ${objUser.ativo}`;
+    return `${this.nome}, ${this.nascimento}, ${this.email}, ${this.role}, ${this.ativo}`;
   }
 }

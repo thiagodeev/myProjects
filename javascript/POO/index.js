@@ -4,4 +4,7 @@ import Docente from "./Docente.js";
 
 const novoUser = new User('Teste', 't@t', '11/11/1111');
 
-console.log(novoUser.exibirInfos())
+const novoAdmin = new Admin('Thia', 'ad@min', '23/12/2000');
+console.log(novoAdmin.nome)
+novoAdmin.nome = '';
+console.log(novoAdmin.nome)

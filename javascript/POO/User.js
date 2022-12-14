@@ -1,12 +1,17 @@
 export default class User {
   #nome;
+  #sobrenome;
   #email;
   #nascimento;
   #role;
   #ativo;
 
-  constructor(nome, email, nascimento, role, ativo = true) {
+  constructor(nomeCompleto, email, nascimento, role, ativo = true) {
+    let [nome, ...sobrenome] = nomeCompleto.split(' ');
+    sobrenome = sobrenome.join(' ');
+
     this.#nome = nome;
+    this.#sobrenome = sobrenome;
     this.#email = email;
     this.#nascimento = nascimento;
     this.#role = role || 'estudante';
@@ -14,7 +19,15 @@ export default class User {
   }
 
   get nome(){
-    return this.#nome
+    if(this.#sobrenome !== ''){
+      return this.#nome + ' ' + this.#sobrenome;
+    } else {
+      return this.#nome;
+    }
+  }
+
+  get sobrenome(){
+    return this.#sobrenome
   }
 
   get email(){
@@ -37,7 +50,10 @@ export default class User {
     if(novoNome === ''){
       throw new Error('Formato inválido.')
     }
-    this.#nome = novoNome
+    let [nome, ...sobrenome] = novoNome.split(' ');
+    sobrenome = sobrenome.join(' ');
+    this.#nome = nome;
+    this.#sobrenome = sobrenome;
   }
 
   set email(novoEmail){

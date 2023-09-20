@@ -193,7 +193,7 @@ const App = () => {
       <div className="container">
         <div className="header-container">
           <p className="header gradient-text">Minha Coleção de NFT</p>
-          <p className="sub-text">Exclusivos! Maravilhosos! Únicos! Descubra seu NFT hoje.</p>
+          <p className="sub-text">Exclusivos! Maravilhosos! Únicos! Tops! Descubra seu NFT hoje.</p>
           {currentAccount === "" ? (
             renderNotConnectedContainer()
           ) : (

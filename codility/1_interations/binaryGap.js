@@ -17,4 +17,4 @@ function solution(A) {
   return largestGap
 }
 
-console.log(solution(328))
+console.log(solution(6790))

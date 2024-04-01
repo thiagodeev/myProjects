@@ -3,25 +3,24 @@
  * @return {number}
  */
 var lengthOfLastWord = function(s) {
-  if(s.length == 1) return 1
-  let length = 0;
-  let wordEnd;
+  let index = s.length - 1;
 
-  for (let index = s.length - 1; index >= 0; index--) {
-    if(s.charAt(index) == ' '){
-      if(wordEnd != undefined){
-        length = wordEnd - index
-        break
-      }
-    } else if(wordEnd == undefined){
-      wordEnd = index;
-    }
-  }
+  do {
+    if(s[index] != ' ') {index--; break}
+    index--
+  } while(index >= 0)
+  if(index <= 0) return 1
 
-  return length == 0 ? s.length - (s.length - (wordEnd + 1)) : length
+  let wordEnd = index + 1;
+  do {
+    if(s[index] == ' ') break
+    index--
+  } while(index >= 0)
+
+  return wordEnd - index
 };
-console.log(lengthOfLastWord('aaa  '))
+console.log(lengthOfLastWord('a'))
 /**
- * l 13
+ * l 8
  * w 5
  */
